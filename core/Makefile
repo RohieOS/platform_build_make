@@ -4675,6 +4675,7 @@ endif
 ifdef DEVICE_MANIFEST_FILE
 	$(hide) echo "vintf_include_empty_vendor_sku=true" >> $@
 endif
+
 ifeq ($(BOARD_BOOTLOADER_IN_UPDATE_PACKAGE),true)
 	$(hide) echo "bootloader_in_update_package=true" >> $@
 endif
@@ -4689,6 +4690,9 @@ ifeq ($(BUILDING_WITH_VSDK),true)
 endif
 ifeq ($(TARGET_FLATTEN_APEX),false)
 	$(hide) echo "target_flatten_apex=false" >> $@
+
+ifneq ($(TARGET_OTA_ASSERT_DEVICE),)
+	$(hide) echo "ota_override_device=$(TARGET_OTA_ASSERT_DEVICE)" >> $@
 endif
 
 .PHONY: misc_info
