@@ -4752,6 +4752,7 @@ $(BUILT_TARGET_FILES_PACKAGE): \
 	    $(MAKE_RECOVERY_PATCH) \
 	    $(BUILT_KERNEL_CONFIGS_FILE) \
 	    $(BUILT_KERNEL_VERSION_FILE) \
+	    $(TARGET_PREBUILT_RECOVERY_RAMDISK) \
 	    | $(ACP)
 	@echo "Package target files: $@"
 	$(call create-system-vendor-symlink)
@@ -4808,6 +4809,9 @@ ifdef BOARD_KERNEL_PAGESIZE
 endif
 ifeq ($(strip $(BOARD_KERNEL_SEPARATED_DT)),true)
 	$(hide) $(ACP) $(INSTALLED_DTIMAGE_TARGET) $(zip_root)/$(PRIVATE_RECOVERY_OUT)/dt
+ifdef TARGET_PREBUILT_RECOVERY_RAMDISK
+	$(hide) cp $(TARGET_PREBUILT_RECOVERY_RAMDISK) $(zip_root)/$(PRIVATE_RECOVERY_OUT)/recovery_ramdisk
+endif
 endif
 endif # INSTALLED_VENDOR_BOOTIMAGE_TARGET not defined
 endif # INSTALLED_RECOVERYIMAGE_TARGET defined or BOARD_USES_RECOVERY_AS_BOOT is true
